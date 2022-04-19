@@ -52,6 +52,7 @@ public class UserController : ControllerBase
         [FromBody] UserLoginDTO Data
     )
     {
+        
         var existingUser = await _user.FindEmail(Data.Email);
 
         if (existingUser is null)
@@ -116,7 +117,7 @@ public class UserController : ControllerBase
         var didUpdate = await _user.UpdateUser(toUpdateUser);
 
         if (!didUpdate)
-            return StatusCode(StatusCodes.Status500InternalServerError, "Could not update Student");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Could not update FullName");
 
         return NoContent();
     }
