@@ -33,6 +33,7 @@ public class PostController : ControllerBase
     {
         var userId = GetUserIdFromClaims(User.Claims);
 
+        
         var toCreateItem = new Post
         {
             Title = Data.Title.Trim(),

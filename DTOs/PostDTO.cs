@@ -6,7 +6,7 @@ public record PostCreateDTO
 {
     [Required]
     [MinLength(3)]
-    [MaxLength(255)]
+    [MaxLength(90)]
     public string Title { get; set; }
 
 

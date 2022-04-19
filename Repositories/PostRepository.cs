@@ -46,12 +46,12 @@ public class PostRepository : BaseRepository, IPostRepository
             return (await con.QueryAsync<Post>(query)).AsList();
     }
 
-    public async Task<Post> GetById(int TodoId)
+    public async Task<Post> GetById(int UserId)
     {
-        var query = $@"SELECT * FROM {TableNames.posts} WHERE id = @TodoId";
+        var query = $@"SELECT * FROM {TableNames.posts} WHERE user_id = @UserId";
 
         using (var con = NewConnection)
-            return await con.QuerySingleOrDefaultAsync<Post>(query, new { TodoId });
+            return await con.QuerySingleOrDefaultAsync<Post>(query, new { UserId });
     }
 
     public async Task Update(Post Item)
