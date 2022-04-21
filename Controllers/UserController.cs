@@ -52,7 +52,7 @@ public class UserController : ControllerBase
         [FromBody] UserLoginDTO Data
     )
     {
-        
+
         var existingUser = await _user.FindEmail(Data.Email);
 
         if (existingUser is null)
@@ -67,6 +67,8 @@ public class UserController : ControllerBase
         {
             Id = existingUser.Id,
             FullName = existingUser.FullName,
+            Email = existingUser.Email,
+
             Token = token,
         };
 

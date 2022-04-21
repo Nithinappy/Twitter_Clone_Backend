@@ -48,7 +48,7 @@ public class CommentRepository : BaseRepository, ICommentRepository
 
     public async Task<Comment> GetById(int Id)
     {
-        var query = $@"SELECT * FROM {TableNames.posts} WHERE id = @Id";
+        var query = $@"SELECT * FROM {TableNames.comments} WHERE id = @Id";
 
         using (var con = NewConnection)
             return await con.QuerySingleOrDefaultAsync<Comment>(query, new { Id });

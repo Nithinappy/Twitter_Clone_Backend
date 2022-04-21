@@ -31,9 +31,16 @@ public class PostController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Post>> CreatePost([FromBody] PostCreateDTO Data)
     {
+
+
         var userId = GetUserIdFromClaims(User.Claims);
 
-        
+        var PostCount = await _post.GetPostCount(userId);
+        if (PostCount >= 5)
+        {
+            return BadRequest("You Have Exceeded the limit of 5 posts");
+        }
+
         var toCreateItem = new Post
         {
             Title = Data.Title.Trim(),
@@ -92,5 +99,11 @@ public class PostController : ControllerBase
     {
         var allPost = await _post.GetAll();
         return Ok(allPost);
+    }
+    [HttpGet("post_id")]
+    public async Task<ActionResult<Post>> GetByIdPost([FromQuery] int post_id)
+    {
+        var Post = await _post.GetById(post_id);
+        return Ok(Post);
     }
 }

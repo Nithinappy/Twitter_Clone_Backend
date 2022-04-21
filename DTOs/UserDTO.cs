@@ -59,6 +59,10 @@ public record UserLoginResDTO
     [JsonPropertyName("fullname")]
     public string FullName { get; set; }
 
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
+
+
     [JsonPropertyName("id")]
     public int Id { get; set; }
 }

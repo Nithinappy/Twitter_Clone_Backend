@@ -11,7 +11,9 @@ public interface IPostRepository
     Task Update(Post Item);
     Task Delete(int Id);
     Task<List<Post>> GetAll();
-    Task<Post> GetById(int TodoId);
+    Task<Post> GetById(int PostId);
+    Task<int> GetPostCount(int UserId);
+
 }
 
 public class PostRepository : BaseRepository, IPostRepository
@@ -46,12 +48,23 @@ public class PostRepository : BaseRepository, IPostRepository
             return (await con.QueryAsync<Post>(query)).AsList();
     }
 
-    public async Task<Post> GetById(int UserId)
+    public async Task<Post> GetById(int PostId)
     {
-        var query = $@"SELECT * FROM {TableNames.posts} WHERE user_id = @UserId";
+        var query = $@"SELECT * FROM {TableNames.posts} WHERE id = @PostId";
 
         using (var con = NewConnection)
-            return await con.QuerySingleOrDefaultAsync<Post>(query, new { UserId });
+            return await con.QuerySingleOrDefaultAsync<Post>(query, new { PostId });
+    }
+
+    public async Task<int> GetPostCount(int UserId)
+    {
+        var query = $@"SELECT count(*) FROM {TableNames.posts} WHERE user_id = @UserId";
+        int count;
+        using (var con = NewConnection)
+            count = await con.ExecuteScalarAsync<int>(query, new { UserId });
+        Console.WriteLine($"Total products: {count}");
+        // return await con.ExecuteScalarAsync<int>(query, new { UserId });
+        return count;
     }
 
     public async Task Update(Post Item)
